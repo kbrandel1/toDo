@@ -14,48 +14,46 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/tasks', 'TaskController@index', function () {
-    $tasks = Task::orderby('created_at','asc')->get();
-    return view('tasks',['tasks' =>$tasks]);
-});
+Route::get( '/', function(){
+	return redirect( '/login' );
+} );
 
-Route::post('/task','TaskController@store', function(Request $request)
-{
-$validator = Validator::make($request->all(),['name' => 'required|max:255',]);
+Route::get( '/tasks', 'TaskController@index' );
 
-if ($validator->fails())
-{
-    return redirect('/')
-        ->withInput()
-        ->withErrors($validator);
-}
-});
-Route::delete('/task/{task}', 'TaskController@destroy', function (Task $task)
-{
-$task->delete();
+Route::post( '/task', 'TaskController@store', function( Request $request ){
+	$validator = Validator::make( $request->all(), [ 'name' => 'required|max:255', ] );
 
-Return redirect('/');
-});
+	if( $validator->fails() ){
+		return redirect( '/' )
+			->withInput()
+			->withErrors( $validator );
+	}
+} );
+Route::delete( '/task/{task}', 'TaskController@destroy', function( Task $task ){
+	$task->delete();
 
-Route::post('/task', function (Request $request) {
-    $validator = Validator::make($request->all(),
-        [
-            'name' => 'required|max:255',
-        ]);
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
+	Return redirect( '/' );
+} );
 
-    return redirect('/');
-});
+Route::post( '/task', function( Request $request ){
+	$validator = Validator::make( $request->all(),
+		[
+			'name' => 'required|max:255',
+		] );
+	if( $validator->fails() ){
+		return redirect( '/' )
+			->withInput()
+			->withErrors( $validator );
+	}
+	$task       = new Task;
+	$task->name = $request->name;
+	$task->save();
 
-Route::Auth();
+	return redirect( '/' );
+} );
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get( '/home', function(){
+	return redirect( '/tasks' );
+} )->name( 'home' );
