@@ -23,9 +23,16 @@
 										</div>
 									</td>
 									<td>
-										<form action="/task/{{ $task->id }}" method="POST">
+										<form action="/tasks/complete" method="POST">
 											{{csrf_field()}}
-											{{method_field('Delete')}}
+
+											<button type="submit" class="btn btn-info">
+												<i class="fa fa-check"></i> Complete
+											</button>
+										</form>
+										<form action="/tasks/{{ $task->id }}" method="POST">
+											{{csrf_field()}}
+											{{method_field('DELETE')}}
 
 											<button type="submit" class="btn btn-danger">
 												<i class="fa  fa-trash"></i> Delete
@@ -43,7 +50,7 @@
 			<div class="panel-body">
 				@include('errors')
 
-				<form action="task" method="POST" class="form-horizontal">
+				<form action="/tasks" method="POST" class="form-horizontal">
 					{{csrf_field()}}
 
 					<div class="form-group">

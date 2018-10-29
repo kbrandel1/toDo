@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -22,9 +23,26 @@ class TaskController extends Controller
 		return view( 'tasks', [ 'tasks' => $tasks ] );
 	}
 
+	public function store(Request $request)
+	{
+		$validator = Validator::make( $request->all(),
+			[
+				'name' => 'required|max:255',
+			] );
+		if( $validator->fails() ){
+			return redirect( '/' )
+				->withInput()
+				->withErrors( $validator );
+		}
+		$task       = new Task($request->all());
+		$task->save();
+
+		return redirect( '/' );
+	}
+
 	public function destroy( Request $request, Task $task )
 	{
-		if($request->user()->can('destroy', $task)){
+		if($request->user()->can('delete', $task)){
 			$task->delete();
 			Return redirect( '/' );
 		}else{

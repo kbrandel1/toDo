@@ -18,39 +18,9 @@ Route::get( '/', function(){
 	return redirect( '/login' );
 } );
 
-Route::get( '/tasks', 'TaskController@index' );
+Route::resource('tasks', 'TaskController');
 
-Route::post( '/task', 'TaskController@store', function( Request $request ){
-	$validator = Validator::make( $request->all(), [ 'name' => 'required|max:255', ] );
-
-	if( $validator->fails() ){
-		return redirect( '/' )
-			->withInput()
-			->withErrors( $validator );
-	}
-} );
-Route::delete( '/task/{task}', 'TaskController@destroy', function( Task $task ){
-	$task->delete();
-
-	Return redirect( '/' );
-} );
-
-Route::post( '/task', function( Request $request ){
-	$validator = Validator::make( $request->all(),
-		[
-			'name' => 'required|max:255',
-		] );
-	if( $validator->fails() ){
-		return redirect( '/' )
-			->withInput()
-			->withErrors( $validator );
-	}
-	$task       = new Task;
-	$task->name = $request->name;
-	$task->save();
-
-	return redirect( '/' );
-} );
+Route::post('tasks/complete', 'TaskController@complete');
 
 Auth::routes();
 
