@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\TaskObserver;
+use App\Task;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(171);
+
+        Task::observe(TaskObserver::class);
     }
 
     /**
