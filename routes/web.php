@@ -18,7 +18,7 @@ Route::get( '/', function(){
 	return redirect( '/login' );
 } );
 
-Route::post('tasks/complete/{id}', 'TaskController@complete');
+Route::post('tasks/complete/{task}', 'TaskController@complete');
 
 Route::resource('tasks', 'TaskController');
 

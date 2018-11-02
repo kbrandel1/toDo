@@ -46,7 +46,7 @@ class TaskController extends Controller
         $task->complete = true;
         $task->save();
 
-        //return redirect('/');
+        return redirect('/');
     }
 
 	public function destroy( Request $request, Task $task )

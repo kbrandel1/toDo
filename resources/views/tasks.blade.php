@@ -23,13 +23,15 @@
 										</div>
 									</td>
 									<td>
-										<form action="/tasks/complete" method="POST">
+										@if($task->complete)
+										<form action="/tasks/complete/{{$task->id}}" method="POST">
 											{{csrf_field()}}
 
 											<button type="submit" class="btn btn-info">
 												<i class="fa fa-check"></i> Complete
 											</button>
 										</form>
+										@endif
 										<form action="/tasks/{{ $task->id }}" method="POST">
 											{{csrf_field()}}
 											{{method_field('DELETE')}}
