@@ -40,6 +40,15 @@ class TaskController extends Controller
 		return redirect( '/' );
 	}
 
+	public function complete(Task $task)
+    {
+
+        $task->complete = true;
+        $task->save();
+
+        //return redirect('/');
+    }
+
 	public function destroy( Request $request, Task $task )
 	{
 		if($request->user()->can('delete', $task)){

@@ -18,9 +18,13 @@ Route::get( '/', function(){
 	return redirect( '/login' );
 } );
 
+Route::post('tasks/complete/{id}', 'TaskController@complete');
+
 Route::resource('tasks', 'TaskController');
 
-Route::post('tasks/complete', 'TaskController@complete');
+
+
+
 
 Auth::routes();
 
