@@ -23,7 +23,7 @@
 										</div>
 									</td>
 									<td>
-										@if($task->complete)
+										@if(!$task->complete)
 										<form action="/tasks/complete/{{$task->id}}" method="POST">
 											{{csrf_field()}}
 
@@ -31,7 +31,18 @@
 												<i class="fa fa-check"></i> Complete
 											</button>
 										</form>
+
 										@endif
+
+											@if ($task->complete)
+												<form action="/tasks/complete/{{$task->id}}" method="POST">
+													{{csrf_field()}}
+													<div class =col-sm-6>
+														<label for ="task" class="col-sm-6 control-label"> complete</label>
+
+													</div>
+												</form>
+											@endif
 										<form action="/tasks/{{ $task->id }}" method="POST">
 											{{csrf_field()}}
 											{{method_field('DELETE')}}
